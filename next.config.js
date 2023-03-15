@@ -8,6 +8,7 @@ module.exports = (phase) => {
         mongodb_password: 'HLqxz1WVGKDtoGfT',
         mongodb_clustername: 'cluster0',
         mongodb_database: 'my-site-auth-dev',
+        NEXTAUTH_URL: 'http://localhost:3000',
       },
     };
   }
@@ -18,6 +19,7 @@ module.exports = (phase) => {
       mongodb_password: 'HLqxz1WVGKDtoGfT',
       mongodb_clustername: 'cluster0',
       mongodb_database: 'my-site-auth',
+      NEXTAUTH_URL: 'https://nextjs-course-1e8e1.web.app',
     },
   };
 };

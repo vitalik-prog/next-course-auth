@@ -1,4 +1,5 @@
-import classes from './starting-page.module.css';
+import React, { useState } from "react";
+import classes from "./starting-page.module.css";
 
 function StartingPageContent() {
   // Show Link to Login page if NOT auth
