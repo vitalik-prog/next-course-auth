@@ -3,9 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { FirestoreAdapter } from "@next-auth/firebase-adapter";
 import { cert } from "firebase-admin/app"
-
 import { verifyPassword } from '../../../helpers/auth';
-import { connectToDatabase } from '../../../helpers/db';
 
 export default NextAuth({
   session: {
