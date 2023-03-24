@@ -3,7 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { FirestoreAdapter } from "@next-auth/firebase-adapter";
 import { cert } from "firebase-admin/app"
-// import { firestore } from '../../../helpers/firebaseDb';
+
 import { verifyPassword } from '../../../helpers/auth';
 import { connectToDatabase } from '../../../helpers/db';
 import serviceAccount from '../../../next-auth-8685a-9e4b0c589a8a.json';
