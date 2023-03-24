@@ -6,7 +6,6 @@ import { cert } from "firebase-admin/app"
 
 import { verifyPassword } from '../../../helpers/auth';
 import { connectToDatabase } from '../../../helpers/db';
-import serviceAccount from '../../../next-auth-8685a-9e4b0c589a8a.json';
 
 export default NextAuth({
   session: {
