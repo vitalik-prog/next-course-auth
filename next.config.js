@@ -4,22 +4,14 @@ module.exports = (phase) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       env: {
-        mongodb_username: '270vitalik270',
-        mongodb_password: 'HLqxz1WVGKDtoGfT',
-        mongodb_clustername: 'cluster0',
-        mongodb_database: 'my-site-auth-dev',
-        NEXTAUTH_URL: 'http://localhost:3000',
+        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
       },
     };
   }
 
   return {
     env: {
-      mongodb_username: '270vitalik270',
-      mongodb_password: 'HLqxz1WVGKDtoGfT',
-      mongodb_clustername: 'cluster0',
-      mongodb_database: 'my-site-auth',
-      NEXTAUTH_URL: 'https://nextjs-course-1e8e1.web.app',
+      NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     },
   };
 };

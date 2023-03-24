@@ -1,18 +1,14 @@
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/react';
 
 import classes from './main-navigation.module.css';
 
-function MainNavigation() {
-  const [session, loading] = useSession();
-
-  function logoutHandler() {
-    signOut();
-  }
+const MainNavigation = () => {
+  const { data: session } = useSession();
 
   return (
     <header className={classes.header}>
-      <Link href='/'>
+      <Link href='/' legacyBehavior>
         <a>
           <div className={classes.logo}>Next Auth</div>
         </a>
@@ -31,7 +27,7 @@ function MainNavigation() {
           )}
           {session && (
             <li>
-              <button onClick={logoutHandler}>Logout</button>
+              <button onClick={() => signOut()}>Logout</button>
             </li>
           )}
         </ul>

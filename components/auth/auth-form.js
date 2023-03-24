@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
-import { signIn } from 'next-auth/client';
-import classes from './auth-form.module.css';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { FcGoogle } from 'react-icons/fc';
+import classes from './auth-form.module.css';
 
 async function createUser (email, password) {
   const newUser = { email, password };
@@ -47,6 +48,9 @@ function AuthForm() {
       if (!result.error) {
         router.replace('/profile');
       }
+      if (result.error) {
+        console.log(result.error);
+      }
     } else {
       try {
         const result = await createUser(enteredEmail, enteredPassword);
@@ -76,10 +80,17 @@ function AuthForm() {
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
+            {isLogin ? 'Create new account' : 'Login with existing credentials'}
           </button>
         </div>
       </form>
+      {isLogin && <div className={classes.social}>
+        <button onClick={() => signIn("google")}>
+          <FcGoogle fontSize={30} />
+          &nbsp;
+          <span>Sign in with Google</span>
+        </button>
+      </div>}
     </section>
   );
 }
