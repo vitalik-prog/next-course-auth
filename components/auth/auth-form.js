@@ -1,10 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FcGoogle } from 'react-icons/fc';
+import NotificationContext from '../../store/notificationContext';
 import classes from './auth-form.module.css';
 
-async function createUser (email, password) {
+const createUser = async (email, password) => {
   const newUser = { email, password };
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
@@ -23,7 +24,8 @@ async function createUser (email, password) {
   return data;
 }
 
-function AuthForm() {
+const AuthForm = () => {
+  const notificationCtx = useContext(NotificationContext);
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef();
@@ -53,10 +55,24 @@ function AuthForm() {
       }
     } else {
       try {
-        const result = await createUser(enteredEmail, enteredPassword);
-        console.log(result);
+        notificationCtx.showNotification({
+          title: 'Signing up...',
+          message: 'Registering new user.',
+          status: 'pending',
+        });
+        await createUser(enteredEmail, enteredPassword);
+        
+        notificationCtx.showNotification({
+          title: 'Success!',
+          message: 'User created successfully.',
+          status: 'success',
+        });
       } catch (error) {
-        console.log(error);
+        notificationCtx.showNotification({
+          title: 'Error!',
+          message: error.message || 'Something went wrong!',
+          status: 'error',
+        });
       }
     }
   }
