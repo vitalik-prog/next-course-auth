@@ -21,7 +21,7 @@ async function handler(req, res) {
         users.push(doc.data().email);
       });
 
-      if (users && users.length > 0) {
+      if (users.length > 0) {
         res.status(422).json({ message: "User exists already!" });
         return;
       }

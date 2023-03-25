@@ -1,40 +1,48 @@
-import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { FirestoreAdapter } from "@next-auth/firebase-adapter";
-import { cert } from "firebase-admin/app"
-
-import { verifyPassword } from '../../../helpers/auth';
-import { connectToDatabase } from '../../../helpers/db';
+import { cert } from "firebase-admin/app";
+import { collection, where, query, getDocs } from "firebase/firestore";
+import { db } from "../../../helpers/firebaseDb";
+import validateCredentials from "../../../helpers/validation";
+import { verifyPassword } from "../../../helpers/auth";
 
 export default NextAuth({
-  session: {
-    jwt: true,
-  },
+  session: { strategy: "jwt" },
   secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     CredentialsProvider({
       authorize: async (credentials) => {
         const { email, password } = credentials;
+        const { isValid, message } = validateCredentials(email, password);
 
-        
-        // const client = await connectToDatabase();
-        // const db = client.db();
+        if (!isValid) {
+          throw new Error(message);
+        }
 
-        // const user = await db.collection('users').findOne({ email });
-        // if (!user) {
-        //   client.close();
-        //   throw new Error('No user found!');
-        // }
+        const q = query(collection(db, "users"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        const users = [];
+        querySnapshot.forEach((doc) => {
+          users.push({
+            email: doc.data().email,
+            password: doc.data().password,
+          });
+        });
 
-        // const isValid = await verifyPassword(password, user.password);
-        // if (!isValid) {
-        //   client.close();
-        //   throw new Error('Could not log you in!');
-        // }
+        if (users.length > 0) {
+          const user = users.pop();
+          const isPasswordValid = await verifyPassword(password, user.password);
 
-        // client.close();
-        return { email: user.email };
+          if (!isPasswordValid) {
+            throw new Error("Password not valid");
+          }
+
+          return { email: user.email };
+        } else {
+          throw new Error("No user found!");
+        }
       },
     }),
     GoogleProvider({
@@ -44,23 +52,15 @@ export default NextAuth({
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
-        }
+          response_type: "code",
+        },
       },
       httpOptions: {
         timeout: 40000,
       },
     }),
   ],
-  // callbacks: {
-  //   async signIn({ account, profile }) {
-  //     if (account.provider === "google") {
-  //       return profile.email_verified && profile.email.endsWith("@gmail.com")
-  //     }
-  //     return true // Do different verification for other providers that don't have `email_verified`
-  //   },
-  // },
-  adapter: FirestoreAdapter({ 
+  adapter: FirestoreAdapter({
     credential: cert({
       type: process.env.FIREBASE_TYPE,
       project_id: process.env.FIREBASE_PROJECT_ID,
@@ -70,8 +70,9 @@ export default NextAuth({
       client_id: process.env.FIREBASE_CLIENT_ID,
       auth_uri: process.env.FIREBASE_AUTH_URI,
       token_uri: process.env.FIREBASE_TOKEN_URI,
-      auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+      auth_provider_x509_cert_url:
+        process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
       client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-    }) 
-  })
+    }),
+  }),
 });
