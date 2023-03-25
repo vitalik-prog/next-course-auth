@@ -1,22 +1,20 @@
 import { useContext } from "react";
 import NotificationContext from "../../store/notificationContext";
 import Notification from "../notification/notification";
-
 import MainNavigation from "./main-navigation";
 
 const Layout = (props) => {
-  const notificationCtx = useContext(NotificationContext);
-  const activeNotification = notificationCtx.notification;
+  const { notification } = useContext(NotificationContext);
 
   return (
     <>
       <MainNavigation />
       <main>{props.children}</main>
-      {activeNotification && (
+      {notification && (
         <Notification
-          title={activeNotification.title}
-          message={activeNotification.message}
-          status={activeNotification.status}
+          title={notification.title}
+          message={notification.message}
+          status={notification.status}
         />
       )}
     </>
