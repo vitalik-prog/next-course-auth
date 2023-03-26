@@ -31,7 +31,7 @@ async function handler(req, res) {
         password: await hashPassword(password),
       });
 
-      res.status(201).json({ message: "Created user!" });
+      res.status(201).json({ email, password });
     } catch (error) {
       res.status(500).json({ message: "Something went wrong" });
       return;
