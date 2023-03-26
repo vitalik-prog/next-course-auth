@@ -90,6 +90,8 @@ const AuthForm = () => {
       </form>
       {isLogin && (
         <div className={classes.social}>
+          {console.log("1111111111111111111111111111111111111")}
+          {console.log(process.env.NEXT_PUBLIC_BASE_URL)}
           <button
             onClick={() =>
               signIn("google", {
