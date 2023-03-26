@@ -90,7 +90,13 @@ const AuthForm = () => {
       </form>
       {isLogin && (
         <div className={classes.social}>
-          <button onClick={() => signIn("google")}>
+          <button
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/profile`,
+              })
+            }
+          >
             <FcGoogle fontSize={30} />
             &nbsp;
             <span>Sign in with Google</span>

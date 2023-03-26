@@ -19,7 +19,7 @@ export const signInUser = async (email, password, showNotification, router) => {
         message: "Logged in successfully.",
         status: "success",
       });
-      router.replace("/");
+      router.replace("/profile");
     }
     if (result.error) {
       showNotification({
