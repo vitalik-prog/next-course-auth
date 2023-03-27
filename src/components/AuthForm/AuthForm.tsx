@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io";
+import { BsTwitter } from "react-icons/bs";
 import NotificationContext from "../../context/layout/NotificationContext";
 import { createUser, signInUser } from "../../helpers/auth";
 import HttpError from "../../common/types/HttpError";
@@ -82,6 +83,43 @@ const AuthForm = () => {
         </div>
         <div className={classes.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
+          {isLogin && (
+            <>
+              <button
+                onClick={() =>
+                  signIn("google", {
+                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+                  })
+                }
+              >
+                <FcGoogle fontSize={30} />
+                &nbsp;
+                <span>Sign in with Google</span>
+              </button>
+              <button
+                onClick={() =>
+                  signIn("facebook", {
+                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+                  })
+                }
+              >
+                <IoLogoFacebook fontSize={30} color="darkblue" />
+                &nbsp;
+                <span>Sign in with Facebook</span>
+              </button>
+              <button
+                onClick={() =>
+                  signIn("twitter", {
+                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+                  })
+                }
+              >
+                <BsTwitter fontSize={30} color="blue" />
+                &nbsp;
+                <span>Sign in with Twitter</span>
+              </button>
+            </>
+          )}
           <button
             type="button"
             className={classes.toggle}
@@ -91,32 +129,6 @@ const AuthForm = () => {
           </button>
         </div>
       </form>
-      {isLogin && (
-        <div className={classes.social}>
-          <button
-            onClick={() =>
-              signIn("google", {
-                callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
-              })
-            }
-          >
-            <FcGoogle fontSize={30} />
-            &nbsp;
-            <span>Sign in with Google</span>
-          </button>
-          <button
-            onClick={() =>
-              signIn("facebook", {
-                callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
-              })
-            }
-          >
-            <IoLogoFacebook fontSize={30} color="darkblue" />
-            &nbsp;
-            <span>Sign in with Facebook</span>
-          </button>
-        </div>
-      )}
     </section>
   );
 };

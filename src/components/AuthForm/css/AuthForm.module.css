@@ -1,11 +1,11 @@
 .auth {
-  margin: 3rem auto;
+  margin: 2rem auto;
   width: 95%;
   max-width: 25rem;
   border-radius: 6px;
   background-color: #38015c;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   text-align: center;
 }
 
@@ -36,27 +36,33 @@
   padding: 0.25rem;
 }
 
-.actions,
-.social {
+.actions {
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.actions button,
-.social button {
+.actions button {
+  width: 15rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
   cursor: pointer;
   font: inherit;
   color: white;
   background-color: #9f5ccc;
   border: 1px solid #9f5ccc;
   border-radius: 4px;
-  padding: 0.5rem 2.5rem;
 }
 
-.actions button:hover,
-.social button:hover {
+.actions button:last-child {
+  margin-top: 0;
+}
+
+.actions button:hover {
   background-color: #873abb;
   border-color: #873abb;
 }
@@ -72,10 +78,4 @@
 .actions .toggle:hover {
   background-color: transparent;
   color: #ae82cc;
-}
-
-.social button {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
 }
