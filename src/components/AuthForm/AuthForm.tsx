@@ -2,6 +2,7 @@ import { useState, useRef, useContext } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
+import { IoLogoFacebook } from "react-icons/io";
 import NotificationContext from "../../context/layout/NotificationContext";
 import { createUser, signInUser } from "../../helpers/auth";
 import HttpError from "../../common/types/HttpError";
@@ -102,6 +103,17 @@ const AuthForm = () => {
             <FcGoogle fontSize={30} />
             &nbsp;
             <span>Sign in with Google</span>
+          </button>
+          <button
+            onClick={() =>
+              signIn("facebook", {
+                callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+              })
+            }
+          >
+            <IoLogoFacebook fontSize={30} color="darkblue" />
+            &nbsp;
+            <span>Sign in with Facebook</span>
           </button>
         </div>
       )}

@@ -36,14 +36,16 @@
   padding: 0.25rem;
 }
 
-.actions, .social {
+.actions,
+.social {
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.actions button, .social button {
+.actions button,
+.social button {
   cursor: pointer;
   font: inherit;
   color: white;
@@ -53,7 +55,8 @@
   padding: 0.5rem 2.5rem;
 }
 
-.actions button:hover, .social button:hover {
+.actions button:hover,
+.social button:hover {
   background-color: #873abb;
   border-color: #873abb;
 }
@@ -74,4 +77,5 @@
 .social button {
   display: flex;
   align-items: center;
+  margin-bottom: 1rem;
 }

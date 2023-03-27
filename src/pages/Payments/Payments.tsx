@@ -1,6 +1,5 @@
 import PaymentsForm from "../../components/PaymentsForm/PaymentsForm";
 import classes from "./css/Payments.module.css";
-import NewPasswordData from "../../common/types/NewPasswordData";
 
 const Payments = () => {
   return (
