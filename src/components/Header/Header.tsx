@@ -18,7 +18,7 @@ const Header = () => {
           )}
           {session && (
             <li>
-              <Link href="/payments">Payments</Link>
+              <Link href="/purchases">Purchases</Link>
             </li>
           )}
           {session && (

@@ -88,7 +88,7 @@ const AuthForm = () => {
               <button
                 onClick={() =>
                   signIn("google", {
-                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/purchases`,
                   })
                 }
               >
@@ -99,7 +99,7 @@ const AuthForm = () => {
               <button
                 onClick={() =>
                   signIn("facebook", {
-                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/purchases`,
                   })
                 }
               >
@@ -110,7 +110,7 @@ const AuthForm = () => {
               <button
                 onClick={() =>
                   signIn("twitter", {
-                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payments`,
+                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/purchases`,
                   })
                 }
               >

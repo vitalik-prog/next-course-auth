@@ -30,7 +30,7 @@ export const signInUser = async (
         message: "Logged in successfully.",
         status: "success",
       });
-      router.replace("/payments");
+      router.replace("/purchases");
     }
     if (!result || result.error) {
       showNotification({

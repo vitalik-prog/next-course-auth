@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import IPaymentsForm from './interfaces/IPaymentsForm';
-import classes from './css/PaymentsForm.module.css';
+import IPaymentsForm from './interfaces/IProductList';
+import classes from './css/ProductList.module.css';
 
 const PaymentsForm: React.FC<IPaymentsForm> = () => {
   const newPasswordInputRef = useRef<HTMLInputElement | null>(null);
