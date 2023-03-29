@@ -72,7 +72,7 @@ export default NextAuth({
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID,
@@ -80,6 +80,23 @@ export default NextAuth({
       version: "2.0",
     }),
   ],
+  callbacks: {
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.id;
+      console.log("session", session);
+      console.log("token", token);
+      session.customToken = token.accessToken;
+
+      return session;
+    },
+  },
   adapter: FirestoreAdapter({
     credential: cert({
       type: process.env.FIREBASE_TYPE,

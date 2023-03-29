@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import NotificationContext from "../context/layout/NotificationContext";
+import { useContext, useEffect } from "react";
+import NotificationContext from "../context/Notification/NotificationContext";
 import Notification from "../components/Notification/Notification";
 import MainNavigation from "../components/Header/Header";
-import ILayout from './interfaces/ILayout';
+import ILayout from "./interfaces/ILayout";
 
 const Layout = (props: ILayout) => {
   const { notification } = useContext(NotificationContext);

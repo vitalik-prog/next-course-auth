@@ -4,13 +4,18 @@ import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io";
 import { BsTwitter } from "react-icons/bs";
-import NotificationContext from "../../context/layout/NotificationContext";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "../../../src/helpers/firebaseDb";
+import { hashPassword } from "../../../src/helpers/auth";
+import NotificationContext from "../../context/Notification/NotificationContext";
 import { createUser, signInUser } from "../../helpers/auth";
 import HttpError from "../../common/types/HttpError";
+import { useAuth } from "../../context/Auth/AuthContext";
 import classes from "./css/AuthForm.module.css";
 
 const AuthForm = () => {
   const { showNotification } = useContext(NotificationContext);
+  const { signUp } = useAuth();
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef<HTMLInputElement | null>(null);
@@ -32,27 +37,20 @@ const AuthForm = () => {
       });
       await signInUser(enteredEmail, enteredPassword, showNotification, router);
     } else {
+      showNotification({
+        title: "Signing up...",
+        message: "Registering new user.",
+        status: "pending",
+      });
+
       try {
-        showNotification({
-          title: "Signing up...",
-          message: "Registering new user.",
-          status: "pending",
-        });
-        const result = await createUser(enteredEmail, enteredPassword);
+        await signUp(enteredEmail, enteredPassword);
         showNotification({
           title: "Success!",
-          message: "User created successfully.",
+          message: "User created successfully!",
           status: "success",
         });
-
-        if (result && result.email) {
-          await signInUser(
-            enteredEmail,
-            enteredPassword,
-            showNotification,
-            router
-          );
-        }
+        router.push("/purchases");
       } catch (error: unknown) {
         const err = error as HttpError;
         showNotification({
@@ -70,16 +68,11 @@ const AuthForm = () => {
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required ref={emailInputRef} />
+          <input type="email" id="email" ref={emailInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="password">Your Password</label>
-          <input
-            type="password"
-            id="password"
-            required
-            ref={passwordInputRef}
-          />
+          <input type="password" id="password" ref={passwordInputRef} />
         </div>
         <div className={classes.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
