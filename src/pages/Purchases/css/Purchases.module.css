@@ -5,6 +5,14 @@
 
 .payments h2 {
   font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 @media (max-width: 768px) {

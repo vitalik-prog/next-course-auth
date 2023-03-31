@@ -9,6 +9,10 @@
 :root {
   --mainColor: #38015c;
   --buttonHoverColor: #540d83;
+  --graphite: #333333;
+  --lightGray: #f2f2f2;
+  --gray: #cccccc;
+  --darkGray: #999999;
 }
 
 body {

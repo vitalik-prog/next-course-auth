@@ -27,18 +27,19 @@ export const AuthContextProvider = ({
           email: user.email,
           uid: user.uid,
         });
-      } else {
-        setUser({ email: null, uid: null });
       }
+
+      setLoading(false);
     });
-    setLoading(false);
 
     return () => unsubscribe();
   }, []);
 
-  const signUp = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
+  const signUp = (email: string, password: string) =>
+    createUserWithEmailAndPassword(auth, email, password);
 
-  const logIn = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
+  const logIn = (email: string, password: string) =>
+    signInWithEmailAndPassword(auth, email, password);
 
   const logOut = async () => {
     setUser({ email: null, uid: null });
@@ -51,3 +52,5 @@ export const AuthContextProvider = ({
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;

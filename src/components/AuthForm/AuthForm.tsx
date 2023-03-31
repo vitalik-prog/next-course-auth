@@ -1,65 +1,33 @@
-import { useState, useRef, useContext } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useState, useRef } from "react";
+import {
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+} from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io";
 import { BsTwitter } from "react-icons/bs";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app } from "../../../src/helpers/firebaseDb";
-import { hashPassword } from "../../../src/helpers/auth";
-import NotificationContext from "../../context/Notification/NotificationContext";
-import { createUser, signInUser } from "../../helpers/auth";
-import HttpError from "../../common/types/HttpError";
-import { useAuth } from "../../context/Auth/AuthContext";
+import IAuthFormProps from "./interfaces/IAuthFormProps";
 import classes from "./css/AuthForm.module.css";
 
-const AuthForm = () => {
-  const { showNotification } = useContext(NotificationContext);
-  const { signUp } = useAuth();
-  const router = useRouter();
+const AuthForm: React.FC<IAuthFormProps> = ({
+  onAuth,
+  signInWithSocialNetworks,
+  signInWithTwitter,
+}) => {
   const [isLogin, setIsLogin] = useState(true);
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
 
   const switchAuthModeHandler = () => setIsLogin((prevState) => !prevState);
 
-  const submitHandler = async (event: React.SyntheticEvent) => {
+  const submitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
-
-    const enteredEmail = emailInputRef.current?.value || "";
-    const enteredPassword = passwordInputRef.current?.value || "";
-
-    if (isLogin) {
-      showNotification({
-        title: "Signing in...",
-        message: "Sending login request.",
-        status: "pending",
-      });
-      await signInUser(enteredEmail, enteredPassword, showNotification, router);
-    } else {
-      showNotification({
-        title: "Signing up...",
-        message: "Registering new user.",
-        status: "pending",
-      });
-
-      try {
-        await signUp(enteredEmail, enteredPassword);
-        showNotification({
-          title: "Success!",
-          message: "User created successfully!",
-          status: "success",
-        });
-        router.push("/purchases");
-      } catch (error: unknown) {
-        const err = error as HttpError;
-        showNotification({
-          title: "Error!",
-          message: err.message || "Something went wrong!",
-          status: "error",
-        });
-      }
-    }
+    
+    onAuth(
+      isLogin,
+      emailInputRef.current?.value,
+      passwordInputRef.current?.value
+    );
   };
 
   return (
@@ -76,43 +44,6 @@ const AuthForm = () => {
         </div>
         <div className={classes.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
-          {isLogin && (
-            <>
-              <button
-                onClick={() =>
-                  signIn("google", {
-                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/purchases`,
-                  })
-                }
-              >
-                <FcGoogle fontSize={30} />
-                &nbsp;
-                <span>Sign in with Google</span>
-              </button>
-              <button
-                onClick={() =>
-                  signIn("facebook", {
-                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/purchases`,
-                  })
-                }
-              >
-                <IoLogoFacebook fontSize={30} color="darkblue" />
-                &nbsp;
-                <span>Sign in with Facebook</span>
-              </button>
-              <button
-                onClick={() =>
-                  signIn("twitter", {
-                    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/purchases`,
-                  })
-                }
-              >
-                <BsTwitter fontSize={30} color="blue" />
-                &nbsp;
-                <span>Sign in with Twitter</span>
-              </button>
-            </>
-          )}
           <button
             type="button"
             className={classes.toggle}
@@ -122,6 +53,25 @@ const AuthForm = () => {
           </button>
         </div>
       </form>
+      {isLogin && (
+        <div className={classes.socialNetworks}>
+          <button onClick={signInWithSocialNetworks.bind(null, new GoogleAuthProvider())}>
+            <FcGoogle fontSize={30} />
+            &nbsp;
+            <span>Sign in with Google</span>
+          </button>
+          <button onClick={signInWithSocialNetworks.bind(null, new FacebookAuthProvider())}>
+            <IoLogoFacebook fontSize={30} color="darkblue" />
+            &nbsp;
+            <span>Sign in with Facebook</span>
+          </button>
+          <button onClick={signInWithTwitter}>
+            <BsTwitter fontSize={30} color="blue" />
+            &nbsp;
+            <span>Sign in with Twitter</span>
+          </button>
+        </div>
+      )}
     </section>
   );
 };

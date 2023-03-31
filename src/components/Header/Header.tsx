@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import { useAuth } from "../../context/Auth/AuthContext";
 import classes from "./css/Header.module.css";
 
 const Header = () => {
-  const { data: session } = useSession();
+  const { user, logOut } = useAuth();
+
   return (
     <header className={classes.header}>
       <Link href="/">
@@ -11,19 +12,19 @@ const Header = () => {
       </Link>
       <nav>
         <ul>
-          {!session && (
+          {!user.email && (
             <li>
               <Link href="/auth">Login</Link>
             </li>
           )}
-          {session && (
+          {user.email && (
             <li>
               <Link href="/purchases">Purchases</Link>
             </li>
           )}
-          {session && (
+          {user.email && (
             <li>
-              <button onClick={() => signOut()}>Logout</button>
+              <button onClick={logOut}>Logout</button>
             </li>
           )}
         </ul>

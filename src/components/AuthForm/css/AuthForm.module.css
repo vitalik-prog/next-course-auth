@@ -36,14 +36,16 @@
   padding: 0.25rem;
 }
 
-.actions {
+.actions,
+.socialNetworks {
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.actions button {
+.actions button,
+.socialNetworks button {
   width: 15rem;
   height: 3rem;
   display: flex;
@@ -62,7 +64,8 @@
   margin-top: 0;
 }
 
-.actions button:hover {
+.actions button:hover,
+.socialNetworks button:hover {
   background-color: #873abb;
   border-color: #873abb;
 }

@@ -9,23 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next-auth/firebase-adapter": "^2.0.1",
     "@stripe/firestore-stripe-payments": "^0.0.6",
     "@stripe/stripe-js": "^1.52.0",
     "@types/node": "^18.15.10",
-    "bcryptjs": "^2.4.3",
     "firebase": "^9.18.0",
     "firebase-admin": "^11.5.0",
-    "mongodb": "^3.7.3",
     "next": "^13.2.4",
-    "next-auth": "^4.20.1",
+    "nextjs-progressbar": "^0.0.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "stripe": "^11.16.0"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.2",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
     "eslint": "8.36.0",

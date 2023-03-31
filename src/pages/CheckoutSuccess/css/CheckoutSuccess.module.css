@@ -1,0 +1,113 @@
+.checkoutSuccess {
+  margin: 2rem auto;
+  max-width: 1050px;
+  padding: 0 1rem;
+}
+
+.checkoutSuccess h1 {
+  font-size: 3.5rem;
+  color: var(--graphite);
+  margin-bottom: 2rem;
+}
+
+.checkoutSuccess h3 {
+  font-size: 1.5rem;
+  color: var(--mainColor);
+  margin-bottom: 1rem;
+}
+
+.checkoutSuccess p {
+  color: var(--darkGray);
+  margin-bottom: 1rem;
+  line-height: 1.75;
+  margin-bottom: 3rem;
+}
+
+.checkoutSuccess h4 {
+  color: var(--mainColor);
+  margin-top: 0.5rem;
+}
+
+.checkoutSuccess hr {
+  color: var(--gray);
+  margin: 3rem 0;
+}
+
+.productInfo {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+.image {
+  position: relative;
+  grid-row: 1 / 3;
+}
+
+.image img {
+  object-fit: cover;
+}
+
+.title strong {
+  margin-bottom: 1rem;
+}
+
+.title p {
+  color: var(--darkGray);
+}
+
+.separator {
+  color: var(--darkGray);
+  margin: 0 1.5rem;
+}
+
+.paymentInformation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.paymentInformation div {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentInformation div strong {
+  margin-bottom: 1rem;
+}
+
+.paymentInformation div span {
+  color: var(--darkGray);
+}
+
+.amounts .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 450px) {
+  .checkoutSuccess h1 {
+    font-size: 2rem;
+  }
+
+  .productInfo {
+    grid-template-columns: 1fr;
+  }
+
+  .image {
+    height: 200px;
+  }
+
+  .paymentInformation {
+    gap: 0.75rem;
+  }
+
+  .paymentInformation div {
+    padding: 0;
+  }
+}

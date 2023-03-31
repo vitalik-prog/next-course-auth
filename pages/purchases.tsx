@@ -1,10 +1,7 @@
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
 import Stripe from "stripe";
-import { getAuth } from "firebase/auth";
 import Purchases from "../src/pages/Purchases/Purchases";
 import IPurchasesPageProps from "../src/interfaces/pages/IPurchasesPageProps";
-import { app } from "../src/helpers/firebaseDb";
 import ProtectedRoute from "../src/hoc/ProtectedRoute";
 
 const PurchasesPage = (props: IPurchasesPageProps) => (
@@ -13,13 +10,16 @@ const PurchasesPage = (props: IPurchasesPageProps) => (
   </ProtectedRoute>
 );
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req } = context;
-  const session = await getSession({ req });
-  console.log("getServerSideProps");
-  const auth = getAuth(app);
-  const user = auth;
-  console.log(user);
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  // const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //   console.log("user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+  //   console.log(user);
+  //   if (user) {
+  //   }
+  // });
+
+  // unsubscribe();
+
   // if (!session) {
   //   return {
   //     redirect: {
@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   return {
-    props: { prices: prices || [], purchases: [], session },
+    props: { prices: prices || [] },
   };
 };
 

@@ -1,4 +1,6 @@
 .product {
+  text-decoration: none;
+  color: inherit;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,11 +10,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   background-color: white;
   transition: all 0.2s ease-out;
-}
-
-.product:hover {
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.46);
 }
 
 .product h3 {
@@ -50,9 +47,12 @@
 
 .action {
   margin-top: 1.5rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
 
-.action button {
+.action .button {
   font: inherit;
   cursor: pointer;
   padding: 0.5rem 1.5rem;
@@ -60,9 +60,11 @@
   background-color: var(--mainColor);
   color: white;
   border: 1px solid var(--mainColor);
+  transition: all 0.2s ease-out;
+  text-decoration: none;
 }
 
-.action button:hover {
+.action .button:hover {
   background-color: var(--buttonHoverColor);
   border-color: var(--buttonHoverColor);
 }

@@ -7,10 +7,10 @@ const validateCredentials = (email: string, password: string) => {
     return { isValid: false, message: "Please enter a valid email" };
   }
 
-  if (!password || password.trim().length < 5) {
+  if (!password || password.trim().length < 6) {
     return {
       isValid: false,
-      message: "Password should be at least 5 characters",
+      message: "Password should be at least 6 characters",
     };
   }
 
